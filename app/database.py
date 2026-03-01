@@ -50,39 +50,37 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
 
-# Load environment variables from a .env file if it exists
+# 1. Load .env only if it exists (for local development)
 load_dotenv()
 
-# 1. Password Security (Local Only)
-raw_password = "Singh0109@"
-safe_password = urllib.parse.quote_plus(raw_password)
+# 2. Get the URL from Environment Variable (Render sets this)
+# IMPORTANT: This must be the first priority
+SQLALCHEMY_DATABASE_URL = os.environ.get("DATABASE_URL")
 
-# 2. Connection String Logic
-# If DATABASE_URL exists (Production/Render), use it. 
-# Otherwise, use your local tutor_db string.
-SQLALCHEMY_DATABASE_URL = os.getenv(
-    "DATABASE_URL", 
-    f"postgresql://postgres:{safe_password}@127.0.0.1:5432/tutor_db"
-)
+# 3. Fallback logic for Local Development
+if not SQLALCHEMY_DATABASE_URL:
+    raw_password = "Singh0109@"
+    safe_password = urllib.parse.quote_plus(raw_password)
+    SQLALCHEMY_DATABASE_URL = f"postgresql://postgres:{safe_password}@127.0.0.1:5432/tutor_db"
+else:
+    # 4. Handle Render's 'postgres://' vs SQLAlchemy's 'postgresql://' requirement
+    if SQLALCHEMY_DATABASE_URL.startswith("postgres://"):
+        SQLALCHEMY_DATABASE_URL = SQLALCHEMY_DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
-# 3. Engine Configuration
-# Note: For Render/PostgreSQL, we sometimes need to handle 'postgres://' vs 'postgresql://'
-if SQLALCHEMY_DATABASE_URL and SQLALCHEMY_DATABASE_URL.startswith("postgres://"):
-    SQLALCHEMY_DATABASE_URL = SQLALCHEMY_DATABASE_URL.replace("postgres://", "postgresql://", 1)
-
+# 5. Engine Configuration
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
     pool_pre_ping=True,
     echo=False
 )
 
-# 4. Session Configuration
+# 6. Session Configuration
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# 5. Model Base
+# 7. Model Base
 Base = declarative_base()
 
-# 6. Database Dependency
+# 8. Database Dependency
 def get_db():
     db = SessionLocal()
     try:
@@ -90,6 +88,6 @@ def get_db():
     finally:
         db.close()
 
-# 7. Initializer Function
+# 9. Initializer Function
 def init_db():
     Base.metadata.create_all(bind=engine)
