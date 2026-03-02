@@ -194,3 +194,18 @@ def setup_final_admin(db: Session = Depends(database.get_db)):
         "status": "Success", 
         "message": "Mubarak ho! admin@gmail.com ab Admin ban chuka hai. Ab aap login kar sakte hain."
     }
+# --- ONE-TIME ADMIN ACTIVATION ROUTE ---
+@app.get("/activate-admin-adhya")
+def activate_admin(db: Session = Depends(database.get_db)):
+    # Look for the specific user you just created
+    user = db.query(models.User).filter(models.User.email == "admin@gmail.com").first()
+    
+    if not user:
+        return {"status": "error", "message": "User admin@gmail.com not found. Signup first!"}
+
+    # Manually force the role to admin and verify them
+    user.role = "admin"
+    user.is_verified = True
+    db.commit()
+    
+    return {"status": "success", "message": "admin@gmail.com is now a Verified ADMIN!"}
