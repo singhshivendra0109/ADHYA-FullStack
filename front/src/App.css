@@ -1,39 +1,77 @@
-/* Ye poori website ko proportionately scale down kar dega */
-html {
-  font-size: 14px !important; /* Default 16px hota hai, ise 14px ya 13px karke dekhein */
+/* 1. Global Reset & Scaling */
+:root {
+  /* Default 16px hota hai. Ise 14px karne se har component (Rem units) 
+     apne aap chota ho jayega bina code badle. */
+  font-size: 14px; 
 }
 
-/* Agar cheezein abhi bhi phat rahi hain, toh box-sizing fix karein */
 * {
   box-sizing: border-box;
-}
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  margin: 0;
+  padding: 0;
 }
 
+html, body {
+  width: 100%;
+  height: 100%;
+  /* Horizontal scroll rokne ke liye */
+  overflow-x: hidden; 
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 2. Root Container Fix (Vite default ko override kiya) */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  /* Jo 1280px aur 2rem padding UI ko squeeze kar rahi thi, use hata diya */
+  max-width: none; 
+  margin: 0;
+  padding: 0;
+  text-align: left; 
+}
+
+/* 3. Common Components Scaling */
 .logo {
-  height: 6em;
-  padding: 1.5em;
+  height: 3rem; /* 6em se kam kiya taaki Navbar fat na lage */
+  padding: 0.5rem;
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 1rem #646cffaa);
 }
 
+.card {
+  padding: 1.5rem; /* Excessive padding ko kam kiya */
+  border-radius: 8px;
+}
+
+/* 4. Typography Control */
+h1 {
+  font-size: 2.2rem;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* 5. Mobile & Tablet Optimization */
+@media (max-width: 768px) {
+  :root {
+    font-size: 13px; /* Choti screens par UI aur bhi compact ho jayega */
+  }
+}
+
+/* 6. Vite Default Animations (Kept but optimized) */
 @keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -42,10 +80,7 @@ html {
   }
 }
 
-.card {
-  padding: 2em;
-}
-
 .read-the-docs {
   color: #888;
+  font-size: 0.85rem;
 }
