@@ -198,7 +198,7 @@ const StudentHeader = () => {
       <div className="w-full mx-auto px-4 md:px-8 lg:px-12">
         
         {/* Header Height Scaled Down (h-16 to h-20 instead of h-32) */}
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-20 md:h-24 lg:h-32">
           
           {/* 1. Logo Scaled Down */}
           <Link to="/" className="flex items-center gap-2 md:gap-3 flex-shrink-0 group">
