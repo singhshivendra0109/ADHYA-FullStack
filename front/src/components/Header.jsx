@@ -49,6 +49,7 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#f7fdfd]/80 backdrop-blur-3xl border-b border-white/50">
       <div className="w-full mx-auto px-6 md:px-10 lg:px-14 xl:px-20">
         
+        
         <div className="flex items-center justify-between h-20 md:h-24 lg:h-32">
           
           {/* Logo */}
