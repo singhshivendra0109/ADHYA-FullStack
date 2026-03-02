@@ -170,3 +170,27 @@ app.include_router(admin.router, prefix="/api/admin")
 @app.get("/")
 def root():
     return {"status": "ADHYA API is Online"}
+
+# --- IS CODE KO FILE KE END MEIN PASTE KAREIN ---
+
+@app.get("/make-admin/admin@gmail.com")
+def setup_final_admin(db: Session = Depends(database.get_db)):
+    # 1. User ko dhoondhna
+    user = db.query(models.User).filter(models.User.email == "admin@gmail.com").first()
+    
+    if not user:
+        return {
+            "status": "Error", 
+            "message": "User 'admin@gmail.com' nahi mila. Pehle website par ja kar is email se SIGNUP karein!"
+        }
+
+    # 2. Role ko Admin mein badalna
+    user.role = "admin"
+    user.is_verified = True
+    
+    db.commit()
+    
+    return {
+        "status": "Success", 
+        "message": "Mubarak ho! admin@gmail.com ab Admin ban chuka hai. Ab aap login kar sakte hain."
+    }
