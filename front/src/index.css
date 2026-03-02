@@ -1,26 +1,2 @@
-/* 
-@import "tailwindcss"; */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
-/* Yahan MAGIC hoga!
-  Default 16px hota hai. 12px karne se poori website 
-  exactly 25% choti ho jayegi bina layout bigde.
-*/
-html {
-  font-size: 12px !important; 
-}
-
-/* Base reset to prevent unwanted scrolling/stretching */
-body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  width: 100vw;
-}
-
-#root {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+@import "tailwindcss";
