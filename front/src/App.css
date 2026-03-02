@@ -1,3 +1,12 @@
+/* Ye poori website ko proportionately scale down kar dega */
+html {
+  font-size: 14px !important; /* Default 16px hota hai, ise 14px ya 13px karke dekhein */
+}
+
+/* Agar cheezein abhi bhi phat rahi hain, toh box-sizing fix karein */
+* {
+  box-sizing: border-box;
+}
 #root {
   max-width: 1280px;
   margin: 0 auto;
