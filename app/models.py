@@ -10,15 +10,10 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True, nullable=False)
-    
-    # CHANGED: Using 'password' to match your auth.py and registration logic
     password = Column(String, nullable=False) 
-    
     role = Column(String, default="student")
     is_verified = Column(Boolean, default=False)
-   
     interview_status = Column(String, server_default='pending', nullable=False)
-    # Automatically captures the timestamp when a user registers
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     # Relationship to connect with TeacherProfile (1-to-1 mapping)
@@ -59,7 +54,7 @@ class StudentProfile(Base):
     
     # The 4 fields you requested
     full_name = Column(String, nullable=False)
-    grade_class = Column(String, nullable=False) # e.g., "10th Standard" or "B.Tech"
+    grade_class = Column(String, nullable=False) 
     city = Column(String, nullable=True)
     profile_picture = Column(String, nullable=True)
 

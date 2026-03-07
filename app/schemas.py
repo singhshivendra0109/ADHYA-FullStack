@@ -1,5 +1,3 @@
-
-
 from pydantic import BaseModel, EmailStr, Field, ConfigDict
 from typing import List, Optional
 from datetime import time, datetime
@@ -112,7 +110,7 @@ class BookingOut(BaseModel):
     time_slot: str
     status: str 
     created_at: datetime
-    # 🆕 RECOMMENDED: Add these so Admin can see names in "Live Bookings" tab
+    
     student_name: Optional[str] = None
     teacher_name: Optional[str] = None
 
@@ -136,7 +134,7 @@ class ReviewOut(BaseModel):
     rating: int
     comment: Optional[str]
     created_at: datetime
-    # ✅ Keep these (you already had them) for Moderation
+    
     student_name: Optional[str] = None
     teacher_name: Optional[str] = None
 
@@ -152,7 +150,7 @@ class AchievementCreate(BaseModel):
 
 class AchievementOut(AchievementCreate):
     id: int
-    # ✅ Keep this (you already had it) for Success Wall
+    
     teacher_name: str 
 
     model_config = ConfigDict(from_attributes=True)

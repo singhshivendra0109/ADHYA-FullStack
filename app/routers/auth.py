@@ -18,8 +18,6 @@ def login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session =
         )
 
     # 2. Verify the password
-    # IMPORTANT: Use 'user.password' because your models.py no longer uses 'hashed_password'
-    # Ensure this calls 'utils.verify_password' to match your utils.py
     if not utils.verify_password(user_credentials.password, user.password):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, 

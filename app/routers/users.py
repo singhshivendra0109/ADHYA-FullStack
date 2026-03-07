@@ -14,11 +14,11 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
         if existing_user:
             raise HTTPException(status_code=400, detail="Email already registered")
 
-        # 2. Password Hashing (Using your specific utils function name)
+        # 2. Password Hashing 
         hashed_pwd = utils.hash_password(user.password)
         
         # 3. DB Instance creation
-        # FIX: Changed 'hashed_password' to 'password' to match your updated models.py
+
         new_user = models.User(
             email=user.email,
             password=hashed_pwd, 
@@ -32,7 +32,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
         return new_user
         
     except Exception as e:
-        # Isse aapko terminal mein dikh jayega ki asali galti kya hai
+        # Isse  terminal mein dikh jayega ki asali galti kya hai
         print(f"DATABASE ERROR: {e}")
         # Raising the specific error detail helps you debug in Postman
         raise HTTPException(status_code=500, detail=str(e))

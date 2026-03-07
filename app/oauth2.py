@@ -14,7 +14,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
-        # Decode using synchronized settings from utils
+        # Decode using synchronized settings from  utils
         payload = jwt.decode(token, utils.SECRET_KEY, algorithms=[utils.ALGORITHM])
         user_id: int = payload.get("user_id")
         if user_id is None:
